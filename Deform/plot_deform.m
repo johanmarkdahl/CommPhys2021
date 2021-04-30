@@ -1,8 +1,9 @@
 clear,clc,clf,close all
 
-for i=1:5
-    
-    subplot(1,5,i)
+tiledlayout(1,5, 'Padding', 'none', 'TileSpacing', 'compact'); 
+
+for i=1:5  
+    nexttile    
     hold on
     
     sphereframe2(1)
