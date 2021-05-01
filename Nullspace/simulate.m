@@ -38,7 +38,7 @@ elseif n==6
         -1 -1 -1 -1 -1 0];
 end
 
-for j=1:M
+parfor j=1:M
     S0=zeros(n,N);
     W=zeros(n,n,N);
     for i=1:N
