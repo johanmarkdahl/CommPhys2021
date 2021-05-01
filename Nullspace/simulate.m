@@ -1,6 +1,6 @@
 function simulate(k,n,N)
 
-M=1000;
+M=100;
 R=zeros(M,1);
 if k<=0
     T=10; % to long simulation term leads to numerical issue in this range
@@ -11,31 +11,32 @@ else
 end
 tspan=[0 T];
 
-if n==2
-    Omega=[0  1
-        -1  0];
-elseif n==3
-    Omega=[0  1 1
-        -1  0 1
-        -1 -1 0];
-elseif n==4
-    Omega=[0  1  1 1
-        -1  0  1 1
-        -1 -1  0 1
-        -1 -1 -1 0];
-elseif n==5
-    Omega=[0  1  1  1 1
-        -1  0  1  1 1
-        -1 -1  0  1 1
-        -1 -1 -1  0 1
-        -1 -1 -1 -1 0];
-elseif n==6
-    Omega=[ 0  1  1  1  1 1
-        -1  0  1  1  1 1
-        -1 -1  0  1  1 1
-        -1 -1 -1  0  1 1
-        -1 -1 -1 -1  0 1
-        -1 -1 -1 -1 -1 0];
+switch n
+    case 2
+        Omega=[0  1
+              -1  0];
+    case 3
+        Omega=[0  1 1
+              -1  0 1
+              -1 -1 0];
+    case 4
+        Omega=[0  1  1 1
+              -1  0  1 1
+              -1 -1  0 1
+              -1 -1 -1 0];
+    case 5
+        Omega=[0  1  1  1 1
+              -1  0  1  1 1
+              -1 -1  0  1 1
+              -1 -1 -1  0 1
+              -1 -1 -1 -1 0];
+    case 6
+        Omega=[ 0  1  1  1  1 1
+               -1  0  1  1  1 1
+               -1 -1  0  1  1 1
+               -1 -1 -1  0  1 1
+               -1 -1 -1 -1  0 1
+               -1 -1 -1 -1 -1 0];
 end
 
 parfor j=1:M
@@ -55,7 +56,7 @@ parfor j=1:M
     s0=reshape(S0,[n*N 1]);
     [~,Sout]=ode45(@(t,s)state_eq_complete(t,s,W,k,n,N),tspan,s0);
     S=reshape(Sout(end,:),[n N]);
-    R(j)=norm(1/N*sum(S(:,:,end),3),'fro');
+    R(j)=norm(1/N*sum(S(:,:,end),2),'fro');
 end
 
 k
